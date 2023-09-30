@@ -54,55 +54,8 @@ function game(){
     function getCurrentScores (){
         alert(`Current Score: Player: ${playerWinCount}, Computer: ${computerWinCount}, Tie: ${tieCount}`);
     }
-    //const playerSelection = "rock";
-    //const computerSelection = getComputerChoice();
-    //console.log(playRound(playerSelection, computerSelection));
+ 
 }
 
 let play = document.getElementById("play-button");
 play.addEventListener("click", game);
-
-
-/*
-let playerRes = "";
-const computerDict = {0:"paper", 1:"rock", 2:"scissors"};
-const winningConditions = {
-    "rock": "scissors",
-    "paper": "rock",
-    "scissors": "paper",
-};
-
-function computerMove(){
-    let computerAns = Math.floor(Math.random() * (2 - 0 + 1)) + 0;
-    return computerDict[computerAns];
-}
-let playerWinCount = 0;
-let computerWinCount = 0;
-
-function promptFunction(){
-    playerRes = prompt("Enter: Rock, Paper, or Scissors");
-    playerRes = playerRes.toLowerCase();
-    computerRes = computerMove();
-    if (playerRes === computerRes) {
-        console.log("It's a tie!");
-    } else if (winningConditions[playerRes] === computerRes) {
-        console.log("Player wins!");
-        playerWinCount++;
-    } else {
-        console.log("Computer wins!");
-        computerWinCount++;
-    }
-    if (playerWinCount === 3){
-        alert("Player won!");
-    }else if (computerWinCount === 3){
-        alert("Computer won!");
-    }
-}
-
-
-
-let play = document.getElementById("play-button");
-play.addEventListener("click", promptFunction);
-
-*/
-
