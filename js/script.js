@@ -5,6 +5,7 @@ function game(){
     let playerWinCount = 0;
     let computerWinCount = 0;
     let tieCount = 0;
+    let winner = "";
 
     // used in getComputerChoice()
     const computerMoves = {
@@ -43,7 +44,13 @@ function game(){
         }
     }
     
-    console.log("done!");
+    if (playerWinCount === 3){
+        winner = "Player";
+    }else{
+        winner = "Computer";
+    }
+
+    alert(`The winner is the ${winner}. Final Score: Player: ${playerWinCount}, Computer: ${computerWinCount}, Tie: ${tieCount}`);
     
     
     function getComputerChoice(){
