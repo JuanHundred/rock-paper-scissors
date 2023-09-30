@@ -50,7 +50,8 @@ function game(){
         winner = "Computer";
     }
 
-    alert(`The winner is the ${winner}. Final Score: Player: ${playerWinCount}, Computer: ${computerWinCount}, Tie: ${tieCount}`);
+    alert(`The winner is the ${winner}. Final Score: 
+    Player: ${playerWinCount}, Computer: ${computerWinCount}, Tie: ${tieCount}`);
     
     
     function getComputerChoice(){
@@ -64,5 +65,5 @@ function game(){
  
 }
 
-let play = document.querySelector("play-button");
+let play = document.querySelector("#play-button");
 play.addEventListener("click", game);
