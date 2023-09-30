@@ -8,7 +8,7 @@ function game(){
     let winner = "";
 
     // used in getComputerChoice()
-    const computerMoves = {
+    const VALID_COMPUTER_MOVES = {
         0: "paper", 
         1: "rock", 
         2: "scissors"
@@ -54,8 +54,8 @@ function game(){
     
     
     function getComputerChoice(){
-        let computerAns = Math.floor(Math.random() * 3);
-        return computerMoves[computerAns];
+        let computerMove = Math.floor(Math.random() * 3);
+        return VALID_COMPUTER_MOVES[computerMove];
     }
     
     function getCurrentScores (){
@@ -64,5 +64,5 @@ function game(){
  
 }
 
-let play = document.getElementById("play-button");
+let play = document.querySelector("play-button");
 play.addEventListener("click", game);
