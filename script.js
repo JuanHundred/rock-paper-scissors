@@ -21,6 +21,7 @@ const moves = {"rock": "scissors", "paper": "rock", "scissors": "paper"};
 // capitalize the first letter of a given string
 const capitalizeFirstLetter = (s) => s.replace(s[0], s[0].toUpperCase());
 
+// plays one round of the game
 function playRound(playerSelection, computerSelection){
     if (computerSelection === moves[playerSelection]) {
         console.log(`You Win! ${capitalizeFirstLetter(playerSelection)} beats ${capitalizeFirstLetter(computerSelection)}!`);
@@ -33,6 +34,7 @@ function playRound(playerSelection, computerSelection){
     }
 }
 
+// runs multiple rounds until the computer or player wins 3 rounds
 function game() {
     const scoreCount = new Map([
         ["player", 0],
@@ -40,6 +42,9 @@ function game() {
         ["tie", 0]
     ]);
     let winner = "";
+
+    // while player score and computer score is not 3
+    // get the player's and computer's choices, run playRound(), and console.log() necessary information based on round results
     while ((scoreCount.get('player') !== 3) && (scoreCount.get('computer') !== 3)) {
         const playerSelection = prompt("Enter rock, paper, or scissors! Best 3 out of 5 wins!");
         const computerSelection = getComputerChoice();
@@ -48,5 +53,7 @@ function game() {
         console.log(winner !== "tie" ? `${winner} won this round!`: "Tie! Replay round!");
         console.log(`The score is Player: ${scoreCount.get("player")}, Computer: ${scoreCount.get("computer")}, Ties: ${scoreCount.get("tie")}`);
     }
+    
+    // the player or the computer reached 3 wins
     console.log(`${winner} won the game!`);
 }
