@@ -1,3 +1,24 @@
+// player buttons
+const rockButton = document.querySelector(".rock");
+const paperButton = document.querySelector(".paper");
+const scissors = document.querySelector(".scissors");
+
+//score count
+const scoreCount = new Map([
+    ["player", 0],
+    ["computer", 0],
+    ["tie", 0]
+]);
+
+// display scores
+const playerScore = document.querySelector(".player-score");
+const ties = document.querySelector(".ties");
+const computerScore = document.querySelector(".computer-score");
+
+// round results
+const roundResults = document.querySelector(".state-round-results");
+
+
 // get a random float number from 0 to 1
 function getRandomDecimal() {
     return Math.round(Math.random() * 100)/100;
@@ -15,45 +36,48 @@ function getComputerChoice() {
     }
 }
 
+// resets scores back to 0 for new game
+function resetScores() {
+    scoreCount.set("player", 0);
+    scoreCount.set("computer", 0);
+    scoreCount.set("tie", 0);
+}
+
 // key beats value, e.g. key = rock, which beats it's value scissors
-const moves = {"rock": "scissors", "paper": "rock", "scissors": "paper"};
+const winningMoves = {"rock": "scissors", "paper": "rock", "scissors": "paper"};
 
 // capitalize the first letter of a given string
 const capitalizeFirstLetter = (s) => s.replace(s[0], s[0].toUpperCase());
 
+// player moves
+const moves = {"&#9994;": "rock", "&#9995;": "paper", "&#9996;": "scissors"};
+let playerSelection = "";
+
+rockButton.addEventListener("click", () => playRound("rock"));
+paperButton.addEventListener("click", () => playRound("paper"));
+scissors.addEventListener("click", () => playRound("scissors"));
+
 // plays one round of the game
-function playRound(playerSelection, computerSelection){
-    if (computerSelection === moves[playerSelection]) {
-        console.log(`You Win! ${capitalizeFirstLetter(playerSelection)} beats ${capitalizeFirstLetter(computerSelection)}!`);
-        return "player";
-    } else if (playerSelection === moves[computerSelection]) {
-        console.log(`You Lose! ${capitalizeFirstLetter(computerSelection)} beats ${capitalizeFirstLetter(playerSelection)}!`);
-        return "computer";
+function playRound(playerSelection) {
+    const computerSelection = getComputerChoice();
+    if (computerSelection === winningMoves[playerSelection]) {
+        scoreCount.set("player", scoreCount.get("player") + 1);
+        playerScore.textContent = `${scoreCount.get("player")}`;
+        if (scoreCount.get("player") < 5) {
+            roundResults.textContent = `You Win! ${capitalizeFirstLetter(playerSelection)} beats ${capitalizeFirstLetter(computerSelection)}!`;
+        } else {
+            roundResults.textContent = `You win the game! ${capitalizeFirstLetter(playerSelection)} beats ${capitalizeFirstLetter(computerSelection)}!`;
+        }
+    } else if (playerSelection === winningMoves[computerSelection]) {
+        scoreCount.set("computer", scoreCount.get("computer") + 1);
+        computerScore.textContent = `${scoreCount.get("computer")}`;
+        if (scoreCount.get("computer") < 5) {
+            roundResults.textContent = `You Lose! ${capitalizeFirstLetter(computerSelection)} beats ${capitalizeFirstLetter(playerSelection)}!`;
+        } else {
+            roundResults.textContent = `You lose the game! ${capitalizeFirstLetter(computerSelection)} beats ${capitalizeFirstLetter(playerSelection)}!`;
+        }
     } else {
-        return "tie";
+        scoreCount.set("tie", scoreCount.get("tie") + 1);
+        ties.textContent = `${scoreCount.get("tie")}`;
     }
-}
-
-// runs multiple rounds until the computer or player wins 3 rounds
-function game() {
-    const scoreCount = new Map([
-        ["player", 0],
-        ["computer", 0],
-        ["tie", 0]
-    ]);
-    let winner = "";
-
-    // while player score and computer score is not 3
-    // get the player's and computer's choices, run playRound(), and console.log() necessary information based on round results
-    while ((scoreCount.get('player') !== 3) && (scoreCount.get('computer') !== 3)) {
-        const playerSelection = prompt("Enter rock, paper, or scissors! Best 3 out of 5 wins!");
-        const computerSelection = getComputerChoice();
-        winner = playRound(playerSelection, computerSelection);
-        scoreCount.set(winner, scoreCount.get(winner) + 1);
-        console.log(winner !== "tie" ? `${winner} won this round!`: "Tie! Replay round!");
-        console.log(`The score is Player: ${scoreCount.get("player")}, Computer: ${scoreCount.get("computer")}, Ties: ${scoreCount.get("tie")}`);
-    }
-    
-    // the player or the computer reached 3 wins
-    console.log(`${winner} won the game!`);
 }
