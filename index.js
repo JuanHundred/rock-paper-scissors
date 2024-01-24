@@ -46,8 +46,8 @@ function resetScores() {
 const playAgain = document.querySelector(".play-again");
 
 // change choices
-const playerChoice = document.querySelector("#player-choice");
-const computerChoice = document.querySelector("#computer-choice");
+const playerChoice = document.querySelector(".player-choice");
+const computerChoice = document.querySelector(".computer-choice");
 
 // after a player reaches 5, hide the rock, paper, scissors buttons
 function hideButtons() {
@@ -71,6 +71,8 @@ function restartGame() {
     scissorsButton.style.display = "inline-block";
     playAgain.style.display = "none";
     roundResults.textContent = "Rock, Paper, Scissors... SHOOT!";
+    playerChoice.textContent = "❔";
+    computerChoice.textContent = "❔";
 }
 
 // key beats value, e.g. key = rock, which beats it's value scissors
@@ -101,13 +103,14 @@ scissorsButton.addEventListener("click", () => {
 function playRound(playerSelection) {
     const computerSelection = getComputerChoice();
     computerChoice.textContent = `${moves[computerSelection]}`;
-    // if player chose beats computer chose
+    // if player choice beats computer choice
     let winner = "";
     if (computerSelection === winningMoves[playerSelection]) {
         scoreCount.set("player", scoreCount.get("player") + 1);
         playerScore.textContent = `${scoreCount.get("player")}`;
         winner = "player";
         roundResults.textContent = `You Win! ${capitalizeFirstLetter(playerSelection)} beats ${capitalizeFirstLetter(computerSelection)}!`;
+    // else computer beats player
     } else if (playerSelection === winningMoves[computerSelection]) {
         winner = "computer";
         scoreCount.set("computer", scoreCount.get("computer") + 1);
@@ -117,9 +120,23 @@ function playRound(playerSelection) {
         scoreCount.set("tie", scoreCount.get("tie") + 1);
         ties.textContent = `${scoreCount.get("tie")}`;
     }
+    
+    /* 
+        If the player or computer reaches 5 wins, display who won the game
+        and add a span tag describing the winning move
+        uses the same class as roundResults, plus changing display to block and changing some css to text correctly
+    */
 
     if (scoreCount.get(winner) == 5) {
-        roundResults.textContent = `${capitalizeFirstLetter(winner)} won the game! ${capitalizeFirstLetter(computerSelection)} beats ${capitalizeFirstLetter(playerSelection)}!`;
+        winner = winner == "player" ? "You" : "Computer";
+        roundResults.textContent = `Game over! ${winner} won the game!`;
+        const newLine = document.createElement("span");
+        newLine.textContent = `${capitalizeFirstLetter(computerSelection)} beats ${capitalizeFirstLetter(playerSelection)}!`;
+        newLine.classList.add("state-round-results");
+        newLine.style.margin = 0;
+        newLine.style.textAlign = "center";
+        newLine.style.display = "block";
+        roundResults.append(newLine);
         hideButtons();
     }
 }
