@@ -45,6 +45,10 @@ function resetScores() {
 // get the play again button
 const playAgain = document.querySelector(".play-again");
 
+// change choices
+const playerChoice = document.querySelector("#player-choice");
+const computerChoice = document.querySelector("#computer-choice");
+
 // after a player reaches 5, hide the rock, paper, scissors buttons
 function hideButtons() {
     resetScores();
@@ -76,17 +80,27 @@ const winningMoves = {"rock": "scissors", "paper": "rock", "scissors": "paper"};
 const capitalizeFirstLetter = (s) => s.replace(s[0], s[0].toUpperCase());
 
 // player moves
-const moves = {"&#9994;": "rock", "&#9995;": "paper", "&#9996;": "scissors"};
+const moves = {"rock": "🪨", "paper": "📄", "scissors": "✂️"};
 let playerSelection = "";
 
 // plays round every time a player clicks one of the choices
-rockButton.addEventListener("click", () => playRound("rock"));
-paperButton.addEventListener("click", () => playRound("paper"));
-scissorsButton.addEventListener("click", () => playRound("scissors"));
+rockButton.addEventListener("click", () => {
+    playRound("rock");
+    playerChoice.textContent = "🪨";
+});
+paperButton.addEventListener("click", () => {
+    playRound("paper");
+    playerChoice.textContent = "📄";
+});
+scissorsButton.addEventListener("click", () => {
+    playRound("scissors");
+    playerChoice.textContent = "✂️";
+});
 
 // plays one round of the game
 function playRound(playerSelection) {
     const computerSelection = getComputerChoice();
+    computerChoice.textContent = `${moves[computerSelection]}`;
     // if player chose beats computer chose
     let winner = "";
     if (computerSelection === winningMoves[playerSelection]) {
